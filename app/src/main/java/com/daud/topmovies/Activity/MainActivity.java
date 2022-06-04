@@ -37,27 +37,29 @@ public class MainActivity extends AppCompatActivity {
         getResult();
     }
 
-    private void getResult(){
+    private void getResult() {
         apiInterface.getData().enqueue(new Callback<MovieModel>() {
             @Override
             public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     rList = response.body().getResults();
 
-                    if (rList.size()>0){
-                        mvRecycler.setAdapter(new TopMovieAdapter(MainActivity.this,rList));
+                    if (rList.size() > 0) {
+                        mvRecycler.setAdapter(new TopMovieAdapter(MainActivity.this, rList));
                     }
                 }
             }
+
             @Override
-            public void onFailure(Call<MovieModel> call, Throwable t) { }
+            public void onFailure(Call<MovieModel> call, Throwable t) {
+            }
         });
     }
 
     private void initial() {
         mvRecycler = findViewById(R.id.mvRecycler);
         mvRecycler.setHasFixedSize(true);
-        mvRecycler.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+        mvRecycler.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
         apiInterface = RetrofitInit.getRetro().create(ApiInterface.class);
         rList = new ArrayList<>();
     }

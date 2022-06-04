@@ -24,8 +24,7 @@ import retrofit2.Response;
 public class DetailsActivity extends AppCompatActivity {
     private ImageButton backBtn;
     private ImageView poster;
-    private TextView titileTv,reDateTv,popularityTv,voteTv,ratingTv,overViewTv
-            ,statusTv,budgetTv,oLanguageTv,oTitleTv,runTimeTv,adultTv;
+    private TextView titileTv, reDateTv, popularityTv, voteTv, ratingTv, overViewTv, statusTv, budgetTv, oLanguageTv, oTitleTv, runTimeTv, adultTv;
     private LinearLayout detailsLay;
     private ApiInterface apiInterface;
     private String movie_id;
@@ -38,7 +37,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         initial();
 
-        if (movie_id != null && !movie_id.isEmpty()){
+        if (movie_id != null && !movie_id.isEmpty()) {
             getMovieDetails(movie_id);
         }
 
@@ -52,34 +51,35 @@ public class DetailsActivity extends AppCompatActivity {
         apiInterface.getDetails(movie_id).enqueue(new Callback<DetailsModel>() {
             @Override
             public void onResponse(Call<DetailsModel> call, Response<DetailsModel> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     detailsLay.setVisibility(View.VISIBLE);
-                    Picasso.get().load("https://image.tmdb.org/t/p/original/"+response.body().getBackdropPath()).into(poster);
+                    Picasso.get().load("https://image.tmdb.org/t/p/original/" + response.body().getBackdropPath()).into(poster);
                     titileTv.setText(response.body().getTitle());
-                    reDateTv.setText("Release : "+response.body().getReleaseDate());
-                    popularityTv.setText("Popularity : "+response.body().getPopularity());
-                    voteTv.setText("Total Vote : "+response.body().getVoteCount());
-                    ratingTv.setText("Rating : "+response.body().getVoteAverage());
+                    reDateTv.setText("Release : " + response.body().getReleaseDate());
+                    popularityTv.setText("Popularity : " + response.body().getPopularity());
+                    voteTv.setText("Total Vote : " + response.body().getVoteCount());
+                    ratingTv.setText("Rating : " + response.body().getVoteAverage());
                     overViewTv.setText(response.body().getOverview());
-                    statusTv.setText("Status : "+response.body().getStatus());
-                    budgetTv.setText("Budget : "+response.body().getBudget());
-                    oTitleTv.setText("Original Title : "+response.body().getOriginalTitle());
-                    oLanguageTv.setText("Original Language : "+response.body().getOriginalLanguage());
-                    runTimeTv.setText("Runtime : "+response.body().getRuntime());
-                    setAdultTv(adultTv,response.body().getAdult());
+                    statusTv.setText("Status : " + response.body().getStatus());
+                    budgetTv.setText("Budget : " + response.body().getBudget());
+                    oTitleTv.setText("Original Title : " + response.body().getOriginalTitle());
+                    oLanguageTv.setText("Original Language : " + response.body().getOriginalLanguage());
+                    runTimeTv.setText("Runtime : " + response.body().getRuntime());
+                    setAdultTv(adultTv, response.body().getAdult());
                 }
             }
+
             @Override
             public void onFailure(Call<DetailsModel> call, Throwable t) {
-                Log.d("ERROR",t.getMessage().toString());
+                Log.d("ERROR", t.getMessage().toString());
             }
         });
     }
 
     private void setAdultTv(TextView adultTv, Boolean adult) {
-        if (adult){
+        if (adult) {
             adultTv.setText("Adult : Yes");
-        }else {
+        } else {
             adultTv.setText("Adult : No");
         }
     }
@@ -88,7 +88,6 @@ public class DetailsActivity extends AppCompatActivity {
         poster = findViewById(R.id.poster);
         backBtn = findViewById(R.id.backBtn);
         detailsLay = findViewById(R.id.detailsLay);
-        detailsLay.setVisibility(View.GONE);
         apiInterface = RetrofitInit.getRetro().create(ApiInterface.class);
         Intent intent = getIntent();
         movie_id = intent.getStringExtra("movie_id");

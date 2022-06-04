@@ -32,16 +32,16 @@ public class TopMovieAdapter extends RecyclerView.Adapter<TopMovieAdapter.TopMov
     @NonNull
     @Override
     public TopMovieVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_view_holder,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.movie_view_holder, parent, false);
         return new TopMovieVH(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TopMovieVH holder, int position) {
-        Picasso.get().load("https://image.tmdb.org/t/p/original/"+list.get(position).getPosterPath()).into(holder.mvPoster);
+        Picasso.get().load("https://image.tmdb.org/t/p/original/" + list.get(position).getPosterPath()).into(holder.mvPoster);
         holder.mvTitle.setText(list.get(position).getTitle());
-        holder.mvReDate.setText("Release : "+list.get(position).getReleaseDate());
-        holder.mvRating.setText("Rating : "+list.get(position).getVoteAverage().toString());
+        holder.mvReDate.setText("Release : " + list.get(position).getReleaseDate());
+        holder.mvRating.setText("Rating : " + list.get(position).getVoteAverage().toString());
 
         holder.mvItem.setOnClickListener(view -> {
             mvItemClickListener(list.get(position).getId());
@@ -50,7 +50,7 @@ public class TopMovieAdapter extends RecyclerView.Adapter<TopMovieAdapter.TopMov
 
     private void mvItemClickListener(Integer id) {
         Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra("movie_id",id.toString());
+        intent.putExtra("movie_id", id.toString());
         context.startActivity(intent);
     }
 
@@ -61,8 +61,9 @@ public class TopMovieAdapter extends RecyclerView.Adapter<TopMovieAdapter.TopMov
 
     public class TopMovieVH extends RecyclerView.ViewHolder {
         private ImageView mvPoster;
-        private TextView mvTitle,mvRating,mvReDate;
+        private TextView mvTitle, mvRating, mvReDate;
         private LinearLayout mvItem;
+
         public TopMovieVH(@NonNull View itemView) {
             super(itemView);
             mvPoster = itemView.findViewById(R.id.mvPoster);
